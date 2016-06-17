@@ -153,7 +153,12 @@ public class BullhornServiceImpl implements Observer {
                         } else if (ProfileConstants.EVENT_FRIEND_REQUEST.equals(event)) {
                             String to = pathParts[2];
                             String oldUserId = switchUser(to);
-                            String url = profileLinkLogic.getInternalDirectUrlToUserConnections();
+                            String siteId = "~" + to;
+                            Site site = siteService.getSite(siteId);
+                            String toolId = site.getToolForCommonId("sakai.profile2").getId();
+                            String url = serverConfigurationService.getPortalUrl() + "/site/"
+                                                                            + siteId + "/tool/" + toolId + "/connections";
+
                             switchUser(oldUserId);
                             doSocialInsert(from, to, event, ref, e.getEventTime(), url);
                             countCache.remove(to);
