@@ -426,6 +426,8 @@ public class ShowPageProducer implements ViewComponentProducer, DefaultView, Nav
 				return;
 			}
 		}
+
+        UIOutput.make(tofill, "current-pageid", Long.toString(simplePageBean.getCurrentPage().getPageId()));
 		
 		boolean canEditPage = simplePageBean.canEditPage();
 		boolean canReadPage = simplePageBean.canReadPage();
@@ -3177,6 +3179,7 @@ public class ShowPageProducer implements ViewComponentProducer, DefaultView, Nav
 				if (available) {
 					link = UIInternalLink.make(container, ID, eParams);
 					link.decorate(new UIFreeAttributeDecorator("lessonbuilderitem", itemString));
+					link.decorate(new UIFreeAttributeDecorator("type", "page"));
 
 					if (i.isPrerequisite()) {
 						simplePageBean.checkItemPermissions(i, true);

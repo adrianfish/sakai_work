@@ -809,3 +809,19 @@ function modalDialogWidth() {
 	if ( dWidth < 300 ) dWidth = 300; // Should not happen
 	return Math.round(dWidth);
 }
+
+var sakai = sakai || {};
+sakai.showSnapPoll = function (tool, context, callback) {
+
+    jQuery.ajax({url: '/direct/snap-poll/showPollNow', cache: false})
+        .done(function (data, textStatus, jqXHR) {
+
+            if (data === 'true') {
+                jQuery('#snap-poll').attr('data-context', context).attr('data-tool', tool).fadeIn();
+                jQuery('#snap-poll-send').click(function (e) { callback(); });
+                jQuery('#snap-poll-ignore').click(function (e) { callback(); });
+            } else {
+                callback();
+            }
+        });
+};
